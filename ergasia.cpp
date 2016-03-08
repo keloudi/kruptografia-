@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 using namespace std;
 
 //Prime Checker
@@ -19,10 +20,24 @@ bool CheckIfPrime(int p1){
 //finds the starting prime
 //for example, for the first chain that it will try, it will be p1=2. For the second, p1=3, etc
 int FindP1(int tries, int PrimeArray[]){
-    if(tries==1){
+    //tries=tries%5;
+    //cout<<tries;
+    if(tries==0){
         return 2;
     }
-    else{
+    else if(tries==1){
+        return 3;
+    }
+    else if(tries==2){
+        return 29;
+    }
+    else if(tries==3){
+        return 41;
+    }
+    else if(tries==4){
+        return 89;
+    }
+    /*else{
         int p1=PrimeArray[0];
         bool flag=false;
         while(flag==false){
@@ -40,19 +55,21 @@ int FindP1(int tries, int PrimeArray[]){
             }
             cout<<p1;
             p1++;
-        }
-    }
+        }*/
 }
 
 //tries to find the primes
 int FindPrimes(int Chainlength, int PrimeArray[]){
-    int tries=1;
+    int tries;
+    srand ( time(NULL) );
+    tries = rand() % 42;
     int p1;
     while(PrimeArray[Chainlength]==0){
+
         p1=FindP1(tries,PrimeArray);
         //,tries
         PrimeArray[0]=p1;
-        cout<<p1;
+        //cout<<p1;
         bool flag=true;
         int i=1;
         int PrimeValue=p1;
@@ -67,7 +84,7 @@ int FindPrimes(int Chainlength, int PrimeArray[]){
             }
             else break;
         }
-        tries++;
+        tries =rand() % 5 + 1;
     }
 }
 
@@ -81,8 +98,8 @@ main (){
     printf("Chose how long do you want your chain to be");
     cin>>ChainLength;
 //Handles errors in case the input is not an integer
-    while(cin.fail()){
-        printf("Enter an integer please");
+    while(cin.fail() || ChainLength<1 || ChainLength>6){
+        printf("Enter a positive integer up to 6 please");
         cin.clear();
         cin.ignore();
         cin>>ChainLength;
